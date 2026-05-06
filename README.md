@@ -1,68 +1,40 @@
 # sonar-lang-ir-probe
 
-`sonar-lang-ir-probe` is a Julia project for Compilers. It turns create a Julia reference implementation for ir workflows, centered on visual model generation, layout fixtures, and stable geometry snapshots into a small local model with readable fixtures and a direct verification command.
+`sonar-lang-ir-probe` is a Julia project in compilers. Its focus is to create a Julia reference implementation for ir workflows, centered on visual model generation, layout fixtures, and stable geometry snapshots.
 
-## Reading Sonar Lang IR Probe
+## Reason For The Project
 
-Start with the README, then open `metadata/project.json` to check the constants behind the examples. After that, `fixtures/cases.csv` shows the compact path and `examples/extended_cases.csv` gives a wider look at the same rule.
+This is intentionally local and self-contained so it can be inspected without credentials, services, or seeded history.
 
-## Purpose
+## Sonar Lang IR Probe Review Notes
 
-This is not a wrapper around a service. It is a self-contained project that shows how the model behaves when demand, capacity, latency, risk, and weight move in different directions.
+Start with `IR pressure` and `IR pressure`. Those cases create the widest score spread in this repo, so they are the best quick check when the model changes.
 
 ## What It Does
 
-- Models source form with deterministic scoring and explicit review decisions.
-- Uses fixture data to keep intermediate state changes visible in code review.
-- Includes extended examples for bytecode output, including `surge` and `degraded`.
-- Documents evaluation checks tradeoffs in `docs/operations.md`.
-- Runs locally with a single verification command and no external credentials.
+- `fixtures/domain_review.csv` adds cases for IR pressure and lowering drift.
+- `metadata/domain-review.json` records the same cases in structured form.
+- `config/review-profile.json` captures the read order and the two review questions.
+- `examples/sonar-lang-ir-walkthrough.md` walks through the case spread.
+- The Julia code includes a review path for `IR pressure` and `IR pressure`.
+- `docs/field-notes.md` explains the strongest and weakest cases.
 
-## Design Sketch
+## How It Is Put Together
 
-The design is intentionally direct: parse or construct a signal, score it, classify it, and verify the expected branch. This makes the repository useful for studying compilers behavior without needing a service or database unless the language project itself is SQL. The Julia project keeps the model in a small module with assertions in a local test script.
+The fixture data drives the tests. The code stays thin, while `metadata/domain-review.json` and `config/review-profile.json` explain what each case is meant to protect.
 
-## Files Worth Reading
+The Julia addition stays small enough to inspect in one sitting.
 
-- `src`: primary implementation
-- `tests`: verification harness
-- `fixtures`: compact golden scenarios
-- `examples`: expanded scenario set
-- `metadata`: project constants and verification metadata
-- `docs`: operations and extension notes
-- `scripts`: local verification and audit commands
-
-## Setup
-
-Clone the repository, enter the directory, and run the verifier. No database server, cloud account, or token is required.
-
-## Usage
+## Run It
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify.ps1
 ```
 
-This runs the language-level build or test path against the compact fixture set.
+## Check It
 
-## Verification
+The verifier is intentionally local. It should fail if the fixture score math, lane assignment, or language-specific test drifts.
 
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/audit.ps1
-```
+## Boundaries
 
-The audit command checks repository structure and README constraints before it delegates to the verifier.
-
-## Fixture Notes
-
-The examples are meant to be readable before they are exhaustive. They cover enough variation to show how latency and risk can pull a decision below the threshold.
-
-## Limits
-
-The fixture set is deliberately small. That keeps the review surface clear, but it also means the model should not be treated as a complete domain simulator.
-
-## Next Directions
-
-- Split the scoring constants into a typed configuration object and validate it before use.
-- Add a comparison mode that shows how decisions change when one signal is adjusted.
-- Add a loader for `examples/extended_cases.csv` and promote selected cases into the language test suite.
-- Add one more compilers fixture that focuses on a malformed or borderline input.
+The fixture set is small enough to audit by hand. The next useful expansion is malformed input coverage, not extra surface area.

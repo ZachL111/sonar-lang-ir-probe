@@ -1,0 +1,73 @@
+{
+  "repo": "sonar-lang-ir-probe",
+  "language": "Julia",
+  "category": "Compilers",
+  "goal": "Create a Julia reference implementation for ir workflows, centered on visual model generation, layout fixtures, and stable geometry snapshots.",
+  "review_model": {
+    "terms": [
+      "IR pressure",
+      "lowering drift",
+      "stack depth",
+      "diagnostic reach"
+    ],
+    "lanes": [
+      "ship",
+      "watch",
+      "hold"
+    ],
+    "score": "signal * 2 + slack + confidence - drag * 3",
+    "purpose": "surface the domain-specific cases that need the most careful review"
+  },
+  "cases": [
+    {
+      "name": "baseline",
+      "focus": "IR pressure",
+      "signal": 54,
+      "slack": 32,
+      "drag": 30,
+      "confidence": 65,
+      "score": 115,
+      "lane": "watch"
+    },
+    {
+      "name": "stress",
+      "focus": "lowering drift",
+      "signal": 75,
+      "slack": 25,
+      "drag": 23,
+      "confidence": 75,
+      "score": 181,
+      "lane": "ship"
+    },
+    {
+      "name": "edge",
+      "focus": "stack depth",
+      "signal": 50,
+      "slack": 40,
+      "drag": 28,
+      "confidence": 65,
+      "score": 121,
+      "lane": "watch"
+    },
+    {
+      "name": "recovery",
+      "focus": "diagnostic reach",
+      "signal": 75,
+      "slack": 27,
+      "drag": 25,
+      "confidence": 87,
+      "score": 189,
+      "lane": "ship"
+    },
+    {
+      "name": "stale",
+      "focus": "IR pressure",
+      "signal": 86,
+      "slack": 20,
+      "drag": 25,
+      "confidence": 80,
+      "score": 197,
+      "lane": "ship"
+    }
+  ]
+}
